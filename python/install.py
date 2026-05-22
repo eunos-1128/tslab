@@ -1,8 +1,11 @@
 from __future__ import print_function
 
 import argparse
+import glob
 import json
 import os
+import pathlib
+import shutil
 import sys
 
 try:
@@ -30,7 +33,9 @@ def install_kernel_spec(is_js, bin, user, prefix):
         os.chmod(td, 0o755)  # Starts off as 700, not user readable
         with open(os.path.join(td, 'kernel.json'), 'w') as f:
             json.dump(create_kernel_json(is_js, bin), f, sort_keys=True)
-        # TODO: Copy any resources
+        resources_dir = pathlib.Path(__file__).parent / 'resources' / ('js' if is_js else 'ts')
+        for logo_file in glob.glob(str(resources_dir / 'logo-*')):
+            shutil.copyfile(logo_file, os.path.join(td, os.path.basename(logo_file)))
         print('Installing {} kernel spec'.format(
             'JavaScript' if is_js else 'TypeScript'))
         KernelSpecManager().install_kernel_spec(

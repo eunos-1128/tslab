@@ -14,7 +14,8 @@
     "/dist/**/*.js",
     "/dist/**/*.d.ts",
     "/bin/**/*",
-    "/python/**/*.py"
+    "/python/**/*.py",
+    "/python/resources/**/*"
   ],
   "dependencies": {
     "@rollup/plugin-commonjs": "^13.0.0",
